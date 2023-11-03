@@ -30,8 +30,7 @@ def proxy_request():
     try:
         response = requests.get(destination_url)
         if response.status_code == 200:
-            headers = dict(response.headers.items())  # Convert ItemsView to dictionary
-            return jsonify({'success': headers}), 200
+            return response.text
         else:
             return jsonify({'error': 'Failed to retrieve content from the destination'}), 500
     except requests.exceptions.RequestException as e:
