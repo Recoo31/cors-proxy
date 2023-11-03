@@ -46,12 +46,8 @@ def proxy_request2():
 
     try:
         response = requests.get(destination_url, allow_redirects=False)
-        if response.status_code == 200:
-            headers = dict(response.headers.items())  # Convert ItemsView to dictionary
-            return jsonify({'success': headers}), 200
-        elif response.status_code == 302:
-            # Handle redirection
-            return jsonify({'error': 'Redirection is not allowed'}), 400
+        if response.status_code == 302:
+            return response.headers['Location']
         else:
             return jsonify({'error': 'Failed to retrieve content from the destination'}), 500
     except requests.exceptions.RequestException as e:
