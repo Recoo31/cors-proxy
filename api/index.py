@@ -30,7 +30,8 @@ def proxy_request():
     try:
         response = requests.get(destination_url, allow_redirects=False)
         if response.status_code == 200:
-            return response.content, response.status_code, response.headers.items()
+            # return response.content, response.status_code, 
+            return jsonify({'success': response.headers.items()}), 200
         elif response.status_code == 302:
             # Handle redirection
             return jsonify({'error': 'Redirection is not allowed'}), 400
