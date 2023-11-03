@@ -20,7 +20,7 @@ def not_found_error(error):
 def internal_server_error(error):
     return jsonify({'error': 'Internal Server Error', 'message': error.description}), 500
 
-@app.route('/proxy', methods=['GET'])
+@app.route("/prx")
 def proxy_request():
     destination_url = request.args.get('destination')
     
