@@ -28,6 +28,24 @@ def proxy_request():
         return jsonify({'error': 'destination parameter is required'}), 400
 
     try:
+        response = requests.get(destination_url)
+        if response.status_code == 200:
+            headers = dict(response.headers.items())  # Convert ItemsView to dictionary
+            return jsonify({'success': headers}), 200
+        else:
+            return jsonify({'error': 'Failed to retrieve content from the destination'}), 500
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route("/prx2")
+def proxy_request2():
+    destination_url = request.args.get('destination')
+
+    if not destination_url:
+        return jsonify({'error': 'destination parameter is required'}), 400
+
+    try:
         response = requests.get(destination_url, allow_redirects=False)
         if response.status_code == 200:
             headers = dict(response.headers.items())  # Convert ItemsView to dictionary
@@ -39,4 +57,5 @@ def proxy_request():
             return jsonify({'error': 'Failed to retrieve content from the destination'}), 500
     except requests.exceptions.RequestException as e:
         return jsonify({'error': str(e)}), 500
+
 
