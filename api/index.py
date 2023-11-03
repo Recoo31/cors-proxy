@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import requests
 
-app = Flask(__name)
+app = Flask(__name__)
 
 @app.route('/proxy', methods=['GET'])
 def proxy_request():
