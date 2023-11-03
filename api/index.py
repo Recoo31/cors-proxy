@@ -9,7 +9,7 @@ def proxy_request():
     
     if not destination_url:
         return jsonify({'error': 'destination parameter is required'}), 400
-
+        
     try:
         response = requests.get(destination_url, allow_redirects=False)
         if response.status_code == 200:
