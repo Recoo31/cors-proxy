@@ -57,3 +57,27 @@ def proxy_request2():
             return jsonify({'error': 'Failed to retrieve content from the destination'}), 500
     except requests.exceptions.RequestException as e:
         return jsonify({'error': str(e)}), 500
+
+
+@app.route("/supercontent/<path:film_path>")
+def blutv_request(film_path):
+    if not film_path:
+        return jsonify({'error': 'destination parameter is required'}), 400
+    try:
+        request_body = {
+            "q": "ContentType:{$in:['Movie']}",
+            "filter": f"Ancestors/any(a:a/SelfPath eq '/filmler/{film_path}/')",
+            "orderby": "SeasonNumber"
+        }
+        headers = {
+            'Content-Type': "text/plain;charset=UTF-8",
+            'Host': "www.blutv.com",
+            'Appplatform': "com.blu"
+        }
+        response = requests.post("https://www.blutv.com/api/supercontents-active", data=request_body, headers=headers)
+        if response.status_code == 200:
+            return jsonify(response.json())
+        else:
+            return jsonify({'error': 'Failed to retrieve content from the destination'}), 500
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
