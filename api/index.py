@@ -66,7 +66,7 @@ def blutv_request(film_path):
     try:
         request_body = {
             "q": "ContentType:{$in:['Movie']}",
-            "filter": f"Ancestors/any(a:a/SelfPath eq '/filmler/{film_path}/')",
+            "filter": f"Ancestors/any(a:a/SelfPath eq '{film_path}/')",
             "orderby": "SeasonNumber"
         }
         headers = {
