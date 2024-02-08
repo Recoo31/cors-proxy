@@ -78,7 +78,7 @@ def blutv_request():
             'Host': "www.blutv.com",
             'Appplatform': "com.blu"
         }
-        response = requests.post("https://www.blutv.com/api/supercontents-active", data=request_body, headers=headers)
+        response = requests.post("https://www.blutv.com/api/supercontents-active", json=request_body, headers=headers)
         if response.status_code == 200:
             return jsonify(response.json())
         else:
