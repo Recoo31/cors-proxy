@@ -59,10 +59,14 @@ def proxy_request2():
         return jsonify({'error': str(e)}), 500
 
 
-@app.route("/supercontent/<path:film_path>")
-def blutv_request(film_path):
+@app.route("/supercontent", methods=['POST'])
+def blutv_request():
+    data = request.json
+    film_path = data.get('film_path')
+
     if not film_path:
         return jsonify({'error': 'destination parameter is required'}), 400
+    
     try:
         request_body = {
             "q": "ContentType:{$in:['Movie']}",
