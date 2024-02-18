@@ -91,15 +91,16 @@ def blutv_request():
 @app.route("/getlive", methods=['POST'])
 def blutv_get_live():
     data = request.json
-    film_path = data.get('id')
+    id = data.get('id')
 
-    if not film_path:
+    if not id:
         return jsonify({'error': 'destination parameter is required'}), 400
     
     try:
         headers = {
             'Host': "www.blutv.com",
-            'Appplatform': "com.blu"
+            'Appplatform': "com.blu",
+            "User-Agent": "okhttp/5.0.0-alpha.2"
         }
         response = requests.get(f"https://www.blutv.com/api/player-config?id={id}&media=mpd&url=/reklamlar/web/player", headers=headers)
         if response.status_code == 200:
