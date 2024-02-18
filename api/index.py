@@ -85,3 +85,26 @@ def blutv_request():
             return jsonify({'error': 'Failed to retrieve content from the destination'}), 500
     except requests.exceptions.RequestException as e:
         return jsonify({'error': str(e)}), 500
+    
+
+
+@app.route("/getlive", methods=['POST'])
+def blutv_get_live():
+    data = request.json
+    film_path = data.get('id')
+
+    if not film_path:
+        return jsonify({'error': 'destination parameter is required'}), 400
+    
+    try:
+        headers = {
+            'Host': "www.blutv.com",
+            'Appplatform': "com.blu"
+        }
+        response = requests.get(f"https://www.blutv.com/api/player-config?id={id}&media=mpd&url=/reklamlar/web/player", headers=headers)
+        if response.status_code == 200:
+            return jsonify(response.json())
+        else:
+            return jsonify({'error': 'Failed to retrieve content from the destination'}), 500
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
