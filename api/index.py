@@ -49,8 +49,10 @@ def proxy_request2():
     if not destination_url:
         return jsonify({'error': 'destination parameter is required'}), 400
 
+    headers = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"}
+    
     try:
-        response = requests.get(destination_url, allow_redirects=False)
+        response = requests.get(destination_url, headers = headers,allow_redirects=False)
         if response.status_code == 302:
             return response.headers['Location']
         else:
